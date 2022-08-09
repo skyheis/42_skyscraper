@@ -10,99 +10,102 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*
+row = 0
+col = 1
+*/
 
-void	print_scale(char **matrix, int rule_pos, int a, int b,  int n)
+void	write_1_to_n_one(char **matrix, int i, int n, int rule_pos)
 {
-	int counter;
-
-	counter = 0;
-	while (counter < n)
-	{
-		matrix[a][b] = char_is;
-		if (rule_pos == 0)
-			char_is++;
-		else
-			char_is--;
-		start++;
-	}
-}
-
-
-
-void	write_1_to_n(char **matrix, int row_col, int index, int rule_pos, int n)
-{
+	int		start;
 	char	char_is;
-	int	start;
 
 	start = 0;
 	if (rule_pos == 0)
 	{
 		char_is = '1';
+		while (start < n)
+		{
+			matrix[i][start] = char_is;
+			char_is++;
+			start++;
+		}
 	}
 	else
 	{
 		char_is = (n + 48);
+		while (start < n)
+		{
+			matrix[i][start] = char_is;
+			char_is--;
+			start++;
+		}		
 	}
-	if (row_col == 0)
-		print_scale(matrix, rule_pos, start, index, n);
-	else
-		print_scale(matrix, rule_pos, index, start, n);
 }
 
-int	populate_n(char **matrix, int row_col, int n)
+void	write_1_to_n_zero(char **matrix, int i, int n, int rule_pos)
 {
-	int	index;
+	int		start;
+	char	char_is;
 
-	index = 0;
-	if (row_col == 0)
-	{		
-		while (index < n)
+	start = 0;
+	if (rule_pos == 0)
+	{
+		char_is = '1';
+		while (start < n)
 		{
-			if (matrix[n][index] == (n + 48))
-				write_1_to_n(matrix, row_col, index, 0, n);
-			if (matrix[n + 1][index] == (n + 48))
-				write_1_to_n(matrix, row_col, index, 1, n);
-			index++;
-		}polulate_n()
+			matrix[start][i] = char_is;
+			char_is++;
+			start++;
+		}
 	}
 	else
-	{		
-		while (index < n)
+	{
+		char_is = (n + 48);
+		while (start < n)
 		{
-			if (matrix[index][n] == (n + 48))
-				write_1_to_n(matrix, row_col, index, 0, n);
-			if (matrix[index][n + 1] == (n + 48))
-				write_1_to_n(matrix, row_col, index, 1, n);
-			index++;
-		}
+			matrix[start][i] = char_is;
+			char_is--;
+			start++;
+		}		
 	}
 }
 
 int	does_n_exist(char *str, int n)
 {
-	int	index;
+	int i;
 
-	while (str[index] != '\0')
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (str[index] == (n + 48))
+		if (str[i] == (n + 48))
 			return (1);
-		index++;
+		i += 2;
 	}
 	return (0);
 }
 
 
-void	populate_if_n_in_str(int n, char **matrix, char *str)
+void	populate_if_n_in_str(char **matrix, char *str, int n)
 {
+	int	i;
 	int	exist_n;
 
 	exist_n = does_n_exist(str, n);
 	if (exist_n)
 	{
-		row_col = 0;
-		polulate_n(**matrix, row_col, n);	
-		row_col = 1;
-		populate_n(**matrix, row_col, n);
+		i = 0;
+		while (i < n)
+		{
+			if (matrix[n][i] == (n + 48))
+				write_1_to_n_zero(matrix, i, n, 0);
+			if (matrix[n + 1][i] == (n + 48))
+				write_1_to_n_zero(matrix, i, n, 1);
+			if (matrix[i][n] == (n + 48))
+				write_1_to_n_one(matrix, i, n, 0);
+			if (matrix[i][n + 1] == (n + 48))
+				write_1_to_n_one(matrix, i, n, 1);			
+			i++;
+		}
 	}
 }

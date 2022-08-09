@@ -1,16 +1,36 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/24 19:07:57 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/07/24 19:10:40 by ggiannit         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int	print_matrix(char **matrix, int n);
+
+void	populate_if_n_in_str(char **matrix, char *str, int n);
+void	populate_one_in_str(char **matrix, int n);
+
+void	add_str_rule(char **mat, char *str, int n)
+{
+	int	i;
+	int	k;
+
+	i = 0;
+	k = 0;
+	while (k < n)
+	{
+		mat[n][k] = str[i];
+		mat[n + 1][k] = str[i + n * 2];
+		k++;
+		i += 2;
+	}
+    i += (n * 2);
+	k = 0;
+	while (k < n)
+	{
+		mat[k][n] = str[i];
+		mat[k][n + 1] = str[i + n * 2];
+		k++;
+		i += 2;
+
+	}
+}
 
 int	size_of_square(char *str)
 {
@@ -52,10 +72,62 @@ int	check_str_is_okay(char *str)
 	return (1);
 }
 
+void	print_matrix(char **matrix, int n)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (x < n + 2)
+	{	
+		while (y < n + 2)
+		{
+			write(1, &matrix[x][y], 1);
+			write(1, " ", 1);
+			y++;
+		}
+		write(1, "\n", 1);
+		y = 0;
+		x++;
+	}
+}
+
+char	**init_matrix(int n)
+{
+	int		i;
+	int		j;
+	char	**mat;
+
+	i = 0;
+	j = 0;
+	mat = (char **) malloc(sizeof(char *) * (n + 2));
+	if (mat == NULL)
+		return (NULL);
+	while (i < (n +2))
+	{
+		mat[i] = (char *) malloc(sizeof(char) * (n + 2));
+		i++;
+	}
+	i = 0;
+	while (i < n)
+	{
+		while (j < n)
+		{
+			mat[i][j] = '0';
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (mat);
+}
+
 int	main(int ac, char **av)
 {
 	int	n;
 	int	is_ok;
+	char	**matrix;
 
 	if (ac != 2)
 		return (1);
@@ -65,34 +137,11 @@ int	main(int ac, char **av)
 	n = size_of_square(av[1]);
 	if (n == -1)
 		return (1);
-/*	init_matrix();
- *	populate_matrix_zero();
- *	populate_if_n_in_str();
- *	populate_one_in_str();
- *
- *	to do - populate_ohters_mandatory_rules()
- *	      - rules check con matematica per trovare possibili opzioni
- *				quello (somma_max - somma_presenti)%spazi_vuoti (diff ecc)
- *	      - funz per check visioni corrette o meno
- *		
- *	INIZIA LA MAGGIAH
- *	0.	trovare prima casella con '0'
- *		1.	genera possibilita date casella non '0' in colonna
- *					- possibilita' si trovano con (tot - somma) && (caselle == '0')
- *				1a.	- malloc con possibilita in ordine
- *			2.	check ripetizioni (se col -> row, se row -> col)
- *				3.	check regola 1 (up or left)
- *					4.	check regola 2 (down or right)
- *						
- *			if (ok) -> ritorna a 1. con riga, partendo da prima casella compilata
- *			if (nok) --2./3./4.--> 1a. ovvero prova altra combinazione
- *						|
- *						---1a == empty--> return 1. uscendo dalla ricorsione
- *							ovvero andra a provare un'altra comb allo step 
- *							precedente. se e' il primo, si caga addosso e da
- *							errore visto che non ha soluzioni.
-*/
+	matrix = init_matrix(n);
+    add_str_rule(matrix, av[1], n);
+	populate_if_n_in_str(matrix, av[1], n);
+    populate_one_in_str(matrix, n);
 	print_matrix(matrix, n);
-	free
+	free(matrix);
 	return (0);
 }

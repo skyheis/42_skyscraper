@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	tab(char *str, int n)
+void	tab(char **mat, char *str, int n)
 {
 	int	i;
 	int	k;
-	int	mat[n + 2][n + 2];
 	int	j;
 
 	i = 0;
