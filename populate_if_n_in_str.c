@@ -73,7 +73,7 @@ void	write_1_to_n_zero(char **matrix, int i, int n, int rule_pos)
 
 int	does_n_exist(char *str, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -84,7 +84,6 @@ int	does_n_exist(char *str, int n)
 	}
 	return (0);
 }
-
 
 void	populate_if_n_in_str(char **matrix, char *str, int n)
 {
@@ -104,7 +103,7 @@ void	populate_if_n_in_str(char **matrix, char *str, int n)
 			if (matrix[i][n] == (n + 48))
 				write_1_to_n_one(matrix, i, n, 0);
 			if (matrix[i][n + 1] == (n + 48))
-				write_1_to_n_one(matrix, i, n, 1);			
+				write_1_to_n_one(matrix, i, n, 1);
 			i++;
 		}
 	}

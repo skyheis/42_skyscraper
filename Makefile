@@ -1,4 +1,4 @@
-SRCS	=  main.c populate_if_n_in_str.c populate_one_in_str.c
+SRCS	=  main.c populate_if_n_in_str.c do_mandatory_rules.c check_and_bready.c print_matrix.c
 OBJS	= ${SRCS:.c=.o}
 NAME = rush01
 CC = gcc
