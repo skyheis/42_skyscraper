@@ -1,4 +1,4 @@
-/*	to do - populate_ohters_mandatory_rules()
+/*	to do - populate_ohters_mandatory_rules() - donefornow
  *	      - rules check con matematica per trovare possibili opzioni
  *				quello (somma_max - somma_presenti)%spazi_vuoti (diff ecc)
  *	      - funz per check visioni corrette o meno
